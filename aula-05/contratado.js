@@ -15,14 +15,20 @@ class Contratado extends Funcionario {
   }
 
   #calcularBeneficiosTotal() {
-    return this.#beneficios.reduce(
+    const beneficios = this.#beneficios.reduce(
       (acumulador, valorAtual) => acumulador + valorAtual.valor,
       0
     );
+
+    if (beneficios !== undefined) {
+      return beneficios;
+    }
+
+    return 0;
   }
 
   get salario() {
-    const salario = super.calcularSalario();
+    const salario = super.salario;
     return salario + this.#calcularBeneficiosTotal();
   }
 }

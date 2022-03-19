@@ -19,3 +19,5 @@ class Estagiario extends Contratado {
     console.log("Um cafezinho saindo, quem quer?");
   }
 }
+
+module.exports = Estagiario;

@@ -1,5 +1,6 @@
 const BeneficioFolha = require("./beneficio-folha");
 const DescontoFolha = require("./desconto-folha");
+const Estagiario = require("./estagiario");
 const Vendedor = require("./vendedor");
 const Vigilante = require("./vigilante");
 
@@ -13,54 +14,121 @@ const planoSaude = new DescontoFolha("Plano de saúde", 9);
 const plr = new BeneficioFolha("PLR", 18000);
 const gympass = new BeneficioFolha("Gympass", 50);
 const alelo = new BeneficioFolha("Alimentação", 500);
+const transporteBeneficio = new BeneficioFolha("Transporte", 500);
 
-const vendedor = new Vendedor(
-  1,
-  "Fulano de Tal",
-  "01234567890",
-  "1988-15-26",
-  2500,
-  [],
-  [],
-  [2500, 6000, 500, 12899]
-);
+const runVendedor = () => {
+  console.log("==== VENDEDOR ====");
+  const vendedor = new Vendedor(
+    1,
+    "Fulano de Tal",
+    "01234567890",
+    "1988-15-26",
+    2500,
+    [],
+    [],
+    [2500, 6000, 500, 12899]
+  );
+  vendedor.adicionarDesconto(inss);
+  vendedor.adicionarDesconto(alimentacao);
+  vendedor.adicionarDesconto(planoSaude);
+  vendedor.adicionaBeneficio(plr);
+  vendedor.adicionaBeneficio(gympass);
+  vendedor.adicionaBeneficio(alelo);
+  vendedor.calcularSalario();
+  vendedor.calcularFerias();
+  vendedor.calculaTotalVendas();
+  vendedor.calcularComissao();
+  console.log(
+    "Salário do vendedor:",
+    vendedor.salario.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+      style: "currency",
+      currency: "BRL",
+      useGrouping: true,
+    })
+  );
+  console.log(
+    "Férias do vendedor:",
+    vendedor.ferias.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+      style: "currency",
+      currency: "BRL",
+      useGrouping: true,
+    })
+  );
+  console.log("Total de vendas:", vendedor.mostrarVendas());
+  console.log("Comissão total:", vendedor.comissão);
+};
 
-const vigilante = new Vigilante(
-  2,
-  "Marcelo Alves",
-  "15935714785",
-  "1989-12-24",
-  1800,
-  [],
-  "VigSeg Segurança Patrimonial",
-  "12/36",
-  45
-);
+const runVigilante = () => {
+  console.log("=========================================================");
+  console.log("==== VIGILANTE ====");
+  const vigilante = new Vigilante(
+    2,
+    "Marcelo Alves",
+    "15935714785",
+    "1989-12-24",
+    1800,
+    [],
+    "VigSeg Segurança Patrimonial",
+    "12/36",
+    45
+  );
+  vigilante.adicionarDesconto(inss);
+  vigilante.adicionarDesconto(alimentacao);
+  vigilante.adicionarDesconto(planoSaude);
+  vigilante.adicionarDesconto(transporte);
+  vigilante.calcularSalario();
+  vigilante.calcularFerias();
+  console.log(
+    "Salário do vigilante:",
+    vigilante.salario.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+      style: "currency",
+      currency: "BRL",
+      useGrouping: true,
+    })
+  );
+  console.log(
+    "Férias do vigilante:",
+    vigilante.ferias.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+      style: "currency",
+      currency: "BRL",
+      useGrouping: true,
+    })
+  );
+};
 
-console.log("==== VENDEDOR ====");
-vendedor.adicionarDesconto(inss);
-vendedor.adicionarDesconto(alimentacao);
-vendedor.adicionarDesconto(planoSaude);
-vendedor.adicionaBeneficio(plr);
-vendedor.adicionaBeneficio(gympass);
-vendedor.adicionaBeneficio(alelo);
-vendedor.calcularSalario();
-vendedor.calcularFerias();
-vendedor.calculaTotalVendas();
-vendedor.calcularComissao();
-console.log("Salário do vendedor:", vendedor.salario);
-console.log("Férias do vendedor:", vendedor.ferias);
-console.log("Total de vendas:", vendedor.mostrarVendas());
-console.log("Comissão total:", vendedor.comissão);
+const runEstagiario = () => {
+  console.log("=========================================================");
+  console.log("==== ESTAGIÁRIO ====");
+  const estagiario = new Estagiario(
+    3,
+    "Manuel de Souza",
+    "14725896332",
+    "2000-06-26",
+    460,
+    [],
+    [transporteBeneficio],
+    20
+  );
+  estagiario.calcularSalario();
+  console.log(
+    "Salário do Estagiário",
+    estagiario.salario.toLocaleString("pt-BR", {
+      maximumFractionDigits: 2,
+      style: "currency",
+      currency: "BRL",
+      useGrouping: true,
+    })
+  );
+};
 
-console.log("=========================================================");
+const main = () => {
+  runVendedor();
+  runVigilante();
+  runEstagiario();
+};
 
-console.log("==== VIGILANTE ====");
-vigilante.adicionarDesconto(inss);
-vigilante.adicionarDesconto(alimentacao);
-vigilante.adicionarDesconto(planoSaude);
-vigilante.adicionarDesconto(transporte);
-vigilante.calcularSalario();
-vigilante.calcularFerias();
-console.log("Salário do vigilante:", vigilante.salario);
-console.log("Férias do vigilante:", vigilante.ferias);
+main();

@@ -17,21 +17,12 @@ class Funcionario {
   }
 
   get salario() {
-    return this.#salario.toLocaleString("pt-BR", {
-      maximumFractionDigits: 2,
-      style: "currency",
-      currency: "BRL",
-      useGrouping: true,
-    });
+    const salario = this.#salario;
+    return salario;
   }
 
   get ferias() {
-    return this.#ferias.toLocaleString("pt-BR", {
-      maximumFractionDigits: 2,
-      style: "currency",
-      currency: "BRL",
-      useGrouping: true,
-    });
+    return this.#ferias;
   }
 
   calcularSalario() {
